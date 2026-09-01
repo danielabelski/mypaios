@@ -73,12 +73,17 @@ def test_get_chroma_client_defaults_to_embedded_and_ignores_http_vars(
     point at a dead port.
     """
     chromadb = pytest.importorskip("chromadb")
-    # requirements.txt installs `chromadb-client` (thin HTTP-only client, as
-    # used on CI); PersistentClient only exists in the full `chromadb`
-    # package. Embedded mode is exercised where the full package is installed
-    # (dev machines, `pip install chromadb`).
+    # requirements.txt declares the FULL `chromadb` precisely because embedded
+    # mode (the default) needs PersistentClient, which the thin
+    # `chromadb-client` package does not ship. This used to skip here, which
+    # meant CI — installing the thin client at the time — never exercised the
+    # default data path at all. Fail loudly instead: reaching this means the
+    # installed set has drifted from requirements.txt.
     if getattr(chromadb, "is_thin_client", False):
-        pytest.skip("chromadb thin client (chromadb-client) has no PersistentClient")
+        pytest.fail(
+            "thin `chromadb-client` is installed, but embedded mode needs the "
+            "full `chromadb` (PersistentClient). Install per requirements.txt."
+        )
     monkeypatch.delenv("CHROMADB_MODE", raising=False)
     monkeypatch.setenv("CHROMADB_HOST", "127.0.0.1")
     monkeypatch.setenv("CHROMADB_PORT", str(_free_port()))

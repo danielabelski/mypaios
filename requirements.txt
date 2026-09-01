@@ -13,9 +13,13 @@ numpy
 # Vector store + local embeddings for RAG, semantic memory, and tool
 # selection. Used on core agent paths, so installed by default — the app
 # still degrades to keyword fallback if they're ever missing.
-# chromadb-client is the lightweight HTTP client (talks to a standalone
-# ChromaDB service); fastembed runs local ONNX embeddings.
-chromadb-client
+# NOTE: this must be the FULL `chromadb`, not the lighter `chromadb-client`.
+# src/chroma_client.py defaults to CHROMADB_MODE=embedded, which calls
+# chromadb.PersistentClient (in-process, no server). `chromadb-client` is
+# HTTP-client-only and does not ship PersistentClient, so declaring it here
+# left a fresh install unable to run the default RAG/memory path.
+# fastembed runs local ONNX embeddings.
+chromadb
 fastembed
 youtube-transcript-api
 # Markdown rendering for research reports (src/visual_report.py).

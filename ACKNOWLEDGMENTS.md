@@ -710,7 +710,7 @@ packages that are in neither.
 | NumPy | BSD-3-Clause |
 | nh3 | MIT (bindings to the Rust `ammonia` crate, MIT/Apache-2.0) |
 | python-dateutil | Apache-2.0 OR BSD-3-Clause (dual) |
-| ChromaDB — declared as `chromadb-client` (the lightweight HTTP client); note the reference `requirements.lock.txt` pins the **full `chromadb`** server package, which additionally pulls kubernetes, grpcio, the OpenTelemetry SDK and PyPika (Apache-2.0), mmh3 (MIT) and orjson (MPL-2.0 AND (Apache-2.0 OR MIT)) | Apache-2.0 |
+| ChromaDB — the **full `chromadb`** package (required, not the lighter HTTP-only `chromadb-client`: the default embedded mode uses `PersistentClient`, which the thin client does not ship). It additionally pulls kubernetes, grpcio, the OpenTelemetry SDK and PyPika (Apache-2.0), mmh3 (MIT) and orjson (MPL-2.0 AND (Apache-2.0 OR MIT)) | Apache-2.0 |
 | fastembed | Apache-2.0 — note the PyPI wheel metadata is mislabelled with an `Other/Proprietary License` classifier; the upstream repository (qdrant/fastembed) is Apache-2.0 |
 | youtube-transcript-api | MIT |
 | markdown | BSD-3-Clause |
